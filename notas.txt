@@ -1,0 +1,25 @@
+1) Entender a demanda do projeto
+
+2) Construtor deve permitir 2 inicializações:
+    (i) construtor padrão: sem parâmetros, define k = 5;
+    (ii) construtor parametrizado: recebe um inteiro de definirá o k;
+
+3) Método fit: etapa de treinamento. Recebe 2 parâmetros:
+    (i) array 2D: matriz de treino;
+    (ii) array 1D: matriz de labels (classes)
+    void: deve armazenar internamente esses parâmetros no objeto para uso na base de conhecimento
+
+4) Método predict: etapa de teste. Recebe 1 parâmetro:
+    (i) array 2D: matriz de teste;
+    retorno: array 1D com as classes atribuídas
+
+5) Obstáculos:
+    No método fit: será necessário informar as dimensões das matrizes na instaciação do objeto knn
+    No método predict: será necessário verificar se o método fit foi executado com sucesso
+
+6) Criei um método para inserir no objeto os dados das tabelas
+void set_tables(int rows_training, int cols_training, int rows_labels, int rows_testing, int cols_testing);
+
+7) Criado os construtores e destrutores
+
+8) 

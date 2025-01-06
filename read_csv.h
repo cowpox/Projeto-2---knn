@@ -56,26 +56,6 @@ class ReadCSV {
 
         // Métodos para teste (excluir depois)
         void atributos(); // exibicao de atributos (para teste)
-
-
-        
-
-
-
-        
-        
-
-        
-
-
-
-        
-
-
-
-
-
-
 };
 
 
