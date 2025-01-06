@@ -5,11 +5,14 @@ using namespace std;
 
 int main(){
     // Teste 1: 
-    cout << "\n=== features-Aula 13 - Projeto 1 - dataset1.csv ===\n";
+    cout << "\n=== tables/dataset1.csv ===\n";
 
     // Criação do objeto dataset1
-    ReadCSV dataset1("features-Aula 13 - Projeto 1 - dataset1.csv", ',', true, 0, 0, 10, 10);
+    ReadCSV dataset1("tables\\dataset1.csv", ',', true, 0, 0, 10, 10);
     cout << "Objeto dataset1 criado com sucesso." << endl;
+
+
+
 
     // Leitura do arquivo e criação da matrix
     dataset1.read_file();
@@ -49,10 +52,10 @@ int main(){
     }
 
     // Teste 2: 
-    cout << "\n=== features-Aula 13 - Projeto 1 - dataset2.csv ===\n";
+    cout << "\n=== tables/dataset2.csv ===\n";
 
     // Criação do objeto dataset2
-    ReadCSV dataset2("features-Aula 13 - Projeto 1 - dataset2.csv", ',', true, 0, 0, 10, 10);
+    ReadCSV dataset2("tables\\dataset2.csv", ',', true, 0, 0, 10, 10);
     cout << "Objeto dataset2 criado com sucesso." << endl;
 
     // Leitura do arquivo e criação da matrix
