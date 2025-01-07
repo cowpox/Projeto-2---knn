@@ -64,10 +64,10 @@ KNN::~KNN() {
 
 
 // Métodos públicos
-void KNN::set_tables(int rows_training, int cols_training, int rows_labels, int rows_testing, int cols_testing){
+void KNN::set_tables(int rows_training, int cols_training, int num_labels, int rows_testing, int cols_testing){
     this->rows_training = rows_training;
     this->cols_training = cols_training;
-    this->rows_labels = rows_labels;
+    this->num_labels = num_labels;
     this->rows_testing = rows_testing;
     this->cols_testing = cols_testing;
 }
@@ -79,7 +79,7 @@ void KNN::fit(int** mat_training, int* arr_labels) {
     }
 
     // Verificar consistência dos dados
-    if (rows_training != rows_labels) {
+    if (rows_training != num_labels) {
         cout << "Erro: Número de exemplos não corresponde ao número de labels!" << endl;
         return;
     }
@@ -98,6 +98,37 @@ void KNN::fit(int** mat_training, int* arr_labels) {
     for (int i = 0; i < rows_training; i++) {
         this->arr_labels[i] = arr_labels[i]; // Copiar valores
     }
+
+    cout << "Modelo treinado com sucesso!" << endl;
+}
+void KNN::fit(int** mat_training, int** mat_labels) {
+    // Validar dados de entrada
+    if (mat_training == nullptr || mat_labels == nullptr) {
+        cout << "Erro: Dados de entrada inválidos (nullptr)!" << endl;
+        return;
+    }
+
+    // Verificar consistência dos dados
+    if (rows_training != num_labels) {
+        cout << "Erro: Número de exemplos não corresponde ao número de labels!"
+             << endl;
+        return;
+    }
+
+    // Converter matriz1D para array1D
+    arr_labels = matrix_to_array(mat_labels, num_labels);
+
+    // Copiar matriz de treino para o atributo interno
+    this->mat_training = new int*[rows_training];
+    for (int i = 0; i < rows_training; i++) {
+        this->mat_training[i] = new int[cols_training];
+        for (int j = 0; j < cols_training; j++) {
+            this->mat_training[i][j] = mat_training[i][j]; // Copiar valores
+        }
+    }
+
+    // Copiar labels para o atributo interno
+    // Não há necessidade, pois já foram copiados no método de conversao de matriz para array
 
     cout << "Modelo treinado com sucesso!" << endl;
 }

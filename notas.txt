@@ -43,3 +43,6 @@ c) Armazenar os dados de treinamento (matriz de treino e array de labels)
         Evita problemas de acesso inválido ou modificações externas indesejadas.
 
 11) Revisados construtores e destrutores, para garantir melhor gerenciamento da memória
+
+12) Criei uma sobrecarga no método fit, para receber matriz 1D no lugar de array 1D
+

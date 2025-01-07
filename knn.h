@@ -13,7 +13,7 @@ class KNN {
         int k; // k do knn
 
         int rows_training, cols_training; // dimensões da matriz de treino
-        int rows_labels; // dimensão do array de labels
+        int num_labels; // dimensão do array de labels
         int rows_testing, cols_testing; // dimensões do array de teste
 
         // Métodos auxiliares (privados)
@@ -26,8 +26,9 @@ class KNN {
         ~KNN(); // destrutor
 
         // Métodos públicos
-        void set_tables(int rows_training, int cols_training, int rows_labels, int rows_testing, int cols_testing);
+        void set_tables(int rows_training, int cols_training, int num_labels, int rows_testing, int cols_testing);
         void fit(int ** mat_training, int * arr_labels);
+        void fit(int** mat_training, int** mat_labels); //sobrecarga
         int* predict(int ** mat_teste);
         void display_matrix(int ** matrix, int rows, int cols);
         int* matrix_to_array(int ** matrix, int num_registers); //num_registers = número de linhas matrix = número de elementos array
