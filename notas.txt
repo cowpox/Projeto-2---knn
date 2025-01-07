@@ -46,3 +46,18 @@ c) Armazenar os dados de treinamento (matriz de treino e array de labels)
 
 12) Criei uma sobrecarga no método fit, para receber matriz 1D no lugar de array 1D
 
+13) Método predict:
+    a) Validar dados de entrada
+    b) Garantir que o modelo foi treinado
+    c) Verificar se o número de colunas de treino e teste são iguais
+    d) Iterar sobre os exemplos de teste:
+        1) calcuar distâncias
+        2) encontrar o k vizinhos mais próximos
+        3) determinar a classe majoritária
+        4) armazenar o resultado
+
+14) Criar métodos auxiliares (modularizar) para o predict:
+double calculate_distance(int* a, int* b, int size);
+int* find_k_nearest_neighbors(double* distances, int k, int num_examples);
+int determine_majority_class(int* neighbors, int k);
+
