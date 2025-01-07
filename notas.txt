@@ -22,4 +22,24 @@ void set_tables(int rows_training, int cols_training, int rows_labels, int rows_
 
 7) Criado os construtores e destrutores
 
-8) 
+8) Criado um método de exibição de matrizes (para testes). Optei por utilizar um método único,
+tanto para matrizes 2D quanto para arrays 1D. Para não criar outro método, em caso de arrays 1D,
+é necessário fazer a conversão para 2D antes (com 1 coluna). Exemplo:
+    int* array = new int[3]{15, 4, 75};
+    int** array_as_matrix = new int*[3];
+    for (int i = 0; i < 3; i++) {
+        array_as_matrix[i] = new int[1]; // Cria uma "coluna"
+        array_as_matrix[i][0] = array[i];
+    }
+
+9) Criadas duas funçoes de conversao: array para matriz e vice-versa
+
+10) Método fit:
+a) Validar dados de entrada
+b) Verificar consistência dos dados
+c) Armazenar os dados de treinamento (matriz de treino e array de labels)
+    Copiar os dados em fit é a abordagem mais segura e robusta porque:
+        Garante que o objeto KNN tenha controle total sobre sua memória interna.
+        Evita problemas de acesso inválido ou modificações externas indesejadas.
+
+11) Revisados construtores e destrutores, para garantir melhor gerenciamento da memória
