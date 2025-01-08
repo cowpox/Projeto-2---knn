@@ -1,0 +1,30 @@
+1) Para os testes, foram utilizadas as bases de dados fornecidas para a atividade anterior (Projeto 1)
+
+features-Aula 13 - Projeto 1 - dataset1.csv
+features-Aula 13 - Projeto 1 - dataset2.csv
+label-Aula 13 - Projeto 1 - dataset1.csv
+label-Aula 13 - Projeto 1 - dataset2.csv
+
+2) Após análise dos datasets, verificamos que se tratavam de duas bases de dados e seus respectivos rótulos. Os valores
+eram os mesmos, porém uma no formato inteiro e outra no formato float. Baseado nisso, foram renomeados:
+features-Aula 13 - Projeto 1 - dataset1 => int_dataset.csv
+features-Aula 13 - Projeto 1 - dataset2 => float_dataset.csv
+label-Aula 13 - Projeto 1 - dataset1 => int_label_dataset.csv
+label-Aula 13 - Projeto 1 - dataset2 => float_label_dataset.csv
+
+3) Os arquivos int_dataset.csv e int_label_dataset.csv foram unidos em um só: int_dataset_full.csv
+
+4) Da mesma forma: float_dataset.csv e float_label_dataset.csv em float_dataset_full.csv
+
+5) Cada arquivo dataset_full foi dividido, aleatoriamente, em treino (80% dos registros) e teste (20% dos registros),
+com os respectivos arquivos de labels e gabaritos.
+int_dataset_full.csv => int_treino.csv
+                        int_teste.csv
+                        int_labels.csv
+                        int_gabarito.csv
+
+float_dataset_full.csv => float_treino.csv
+                        float_teste.csv
+                        float_labels.csv
+                        float_gabarito.csv
+

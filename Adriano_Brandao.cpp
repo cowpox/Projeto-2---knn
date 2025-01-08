@@ -28,7 +28,8 @@ int main(){
     // conjunto de treino
     cout << "\n=== treino.csv ===\n";
     // Criação do objeto treino
-    ReadCSV treino("tables\\int_treino.csv", ',', true, 0, 0, 100, 10);
+    // ReadCSV treino("tables\\int_dataset.csv", ',', true, 0, 0, 1000, 10);//dataset completo (inclui o teste)
+    ReadCSV treino("tables\\int_treino.csv", ',', true, 0, 0, 1000, 10);
     cout << "Objeto treino criado com sucesso." << endl;
     // Leitura do arquivo e criação da matrix
     treino.read_file();
@@ -46,7 +47,8 @@ int main(){
     // labels
     cout << "\n=== labels.csv ===\n";
     // Criação do objeto labels
-    ReadCSV labels("tables\\labels.csv", ',', true, 0, 0, 100, 10);
+    // ReadCSV labels("tables\\int_label_dataset.csv", ',', true, 0, 0, 1000, 10);//todos os labels(inclui o teste)
+    ReadCSV labels("tables\\int_labels.csv", ',', true, 0, 0, 1000, 10);
     cout << "Objeto labels criado com sucesso." << endl;
     // Leitura do arquivo e criação da matrix
     labels.read_file();
@@ -63,7 +65,7 @@ int main(){
     // conjunto de teste
     cout << "\n=== tables/teste.csv ===\n";
     // Criação do objeto teste
-    ReadCSV teste("tables\\int_teste.csv", ',', true, 0, 0, 20, 10);
+    ReadCSV teste("tables\\int_teste.csv", ',', true, 0, 0, 350, 10);
     cout << "Objeto teste criado com sucesso." << endl;
     // Leitura do arquivo e criação da matrix
     teste.read_file();
@@ -81,7 +83,7 @@ int main(){
     // gabarito
     cout << "\n=== gabarito.csv ===\n";
     // Criação do objeto gabarito
-    ReadCSV gabarito("tables\\gabarito.csv", ',', true, 0, 0, 20, 10);
+    ReadCSV gabarito("tables\\int_gabarito.csv", ',', true, 0, 0, 350, 10);
     cout << "Objeto gabarito criado com sucesso." << endl;
     // Leitura do arquivo e criação da matrix
     gabarito.read_file();
@@ -96,7 +98,7 @@ int main(){
 
      
     // Criar e treinar modelo KNN
-    KNN knn(4);  // k = 5
+    KNN knn(1);  // k = 5
     knn.set_tables(rows_training, cols_training, num_labels, rows_testing, cols_testing);
     knn.fit(matrix_training, matrix_labels);
     int* predictions = knn.predict(matrix_testing);
