@@ -13,18 +13,19 @@ void KNN::free_matrix(int** matrix, int rows) {
     }
     delete[] matrix;
 }
-
 double KNN::calculate_distance(int* a, int* b, int size) {
     double sum = 0.0;
     for (int i = 0; i < size; i++) {
-        sum += (a[i] - b[i]) * (a[i] - b[i]);
+        double diff = a[i] - b[i];
+        sum += diff * diff;
     }
     return sqrt(sum);
 }
 
-// Retorna um array (neighbors) de tamanho k, onde cada
-// elemento é o índice de um dos k exemplos de treinamento mais próximos.
+
 int* KNN::find_k_nearest_neighbors(double* distances, int k, int num_examples) {
+    // Retorna um array (neighbors) de tamanho k, onde cada
+    // elemento é o índice de um dos k exemplos de treinamento mais próximos.
     int* neighbors = new int[k];
     for (int i = 0; i < k; i++) { //itera k vezes para encontrar os k vizinhos mais próximos
         //encontra o índice do menor valor
@@ -43,9 +44,8 @@ int* KNN::find_k_nearest_neighbors(double* distances, int k, int num_examples) {
     }
     return neighbors;
 }
-
-//Retorna a classe mais frequente entre os k vizinhos.
 int KNN::determine_majority_class(int* neighbors, int k) {
+    //Retorna a classe mais frequente entre os k vizinhos.
     //inicializar um mapa para contar frequencias
     //este mapa associa cada classe (chave) ao número de ocorrências dessa classe (valor).
     map<int, int> class_count;
@@ -78,9 +78,8 @@ int KNN::determine_majority_class(int* neighbors, int k) {
         }
     }
     return majority_class;
+
 }
-
-
 
 // Construtores e destrutor
 KNN::KNN() {
@@ -137,6 +136,11 @@ void KNN::set_tables(int rows_training, int cols_training, int num_labels, int r
     this->num_labels = num_labels;
     this->rows_testing = rows_testing;
     this->cols_testing = cols_testing;
+    // Ajustar k para que não exceda o número de exemplos de treinamento
+    if (this->k > rows_training) {
+        cout << "Aviso: k (" << this->k << ") é maior que o número de exemplos de treinamento (" << rows_training << "). Ajustando k para " << rows_training << "." << endl;
+        this->k = rows_training;
+    }
 }
 void KNN::fit(int** mat_training, int* arr_labels) {
     // Validar dados de entrada
@@ -200,7 +204,6 @@ void KNN::fit(int** mat_training, int** mat_labels) {
     is_trained = true;
     cout << "Modelo treinado com sucesso!" << endl;
 }
-
 int* KNN::predict(int** mat_testing) {
     // Validar dados de entrada
     if (mat_testing == nullptr) {
@@ -229,13 +232,24 @@ int* KNN::predict(int** mat_testing) {
         double* distances = new double[rows_training]; //cria um array de distâncias
         for (int j = 0; j < rows_training; j++) {
             distances[j] = calculate_distance(mat_testing[i], mat_training[j], cols_training);
+            cout << "Distância entre teste " << i + 1 << " e treino " << j + 1 << ": " << distances[j] << endl;
         }
 
         // Encontrar os k vizinhos mais próximos
         int* neighbors = find_k_nearest_neighbors(distances, k, rows_training);
 
+        cout << "Vizinhos mais próximos para teste " << i + 1 << ": ";
+        for (int n = 0; n < k; n++) {
+            cout << neighbors[n] << " (classe " << arr_labels[neighbors[n]]
+                 << ") ";
+        }
+        cout << endl;
+
         // Determinar a classe majoritária
         arr_prediction[i] = determine_majority_class(neighbors, k);
+
+        cout << "Classe majoritária para teste " << i + 1 << ": "
+             << arr_prediction[i] << endl;
 
         // Liberar memória temporária
         delete[] distances;

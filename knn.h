@@ -1,3 +1,5 @@
+#ifndef KNN_H
+#define KNN_H
 #include <iostream>
 
 using namespace std;
@@ -40,3 +42,5 @@ class KNN {
         int** array_to_matrix(int * array, int num_registers); ////num_registers = número de elementos do array = número de linhas matrix
 
 };
+
+#endif

@@ -61,3 +61,14 @@ double calculate_distance(int* a, int* b, int size);
 int* find_k_nearest_neighbors(double* distances, int k, int num_examples);
 int determine_majority_class(int* neighbors, int k);
 
+15) Iniciados testes
+a) inconsistência em k > número de exemplos.
+solução: em set_tables:
+// Ajustar k para que não exceda o número de exemplos de treinamento
+    if (this->k > rows_training) {
+        cout << "Aviso: k (" << this->k << ") é maior que o número de exemplos de treinamento (" << rows_training << "). Ajustando k para " << rows_training << "." << endl;
+        this->k = rows_training;
+    }
+
+
+

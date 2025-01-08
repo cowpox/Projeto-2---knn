@@ -1,99 +1,116 @@
 #include <iostream>
 #include "read_csv.cpp"
+#include "KNN.cpp"
 
 using namespace std;
 
+void display_matrix(int** matrix, int rows, int cols) {
+    // exibe os dados da matriz alocada pelo objeto
+    cout << "Matriz lida (objeto):" << endl;
+    for (int i = 0; i < rows; ++i) {
+        for (int j = 0; j < cols; ++j) {
+            cout << matrix[i][j] << "\t";
+        }
+        cout << endl;
+    }
+}
+
+float compare_matrices(int** matrix1, int** matrix2, int num_elements){
+    float equals = 0;
+    for (int i = 0; i < num_elements; i++){
+        if (matrix1[i][0] == matrix2[i][0])
+            equals++;
+    }
+    return equals / num_elements;
+}
+
 int main(){
-    // Teste 1: 
-    cout << "\n=== tables/dataset1.csv ===\n";
-
-    // Criação do objeto dataset1
-    ReadCSV dataset1("tables\\dataset1.csv", ',', true, 0, 0, 10, 10);
-    cout << "Objeto dataset1 criado com sucesso." << endl;
-
-
-
-
+    // conjunto de treino
+    cout << "\n=== treino.csv ===\n";
+    // Criação do objeto treino
+    ReadCSV treino("tables\\int_treino.csv", ',', true, 0, 0, 100, 10);
+    cout << "Objeto treino criado com sucesso." << endl;
     // Leitura do arquivo e criação da matrix
-    dataset1.read_file();
+    treino.read_file();
     cout << endl;
-
     // Exibição da matriz pelo objeto
-    dataset1.display_matrix();
+    treino.display_matrix();
     cout << endl;
-
-    // Atribuição do ponteiro retornado pelo objeto dependendo do tipo de dados
-    if (dataset1.getData_type() == "int") {
-        int** matrix = dataset1.get_matrix_as_int();
-        cout << "Ponteiro (int) atribuído com sucesso." << endl;
-
-        // Exibição da matriz pelo ponteiro
-        cout << endl;
-        cout << "Matriz lida (ponteiro - int):" << endl;
-        for (int i = 0; i < dataset1.getN_rows(); ++i) {
-            for (int j = 0; j < dataset1.getN_cols(); ++j) {
-                cout << matrix[i][j] << "\t";  // Tabulação entre os elementos
-            }
-            cout << endl;
-        }
-    } else if (dataset1.getData_type() == "float") {
-        float** matrix = dataset1.get_matrix_as_float();
-        cout << "Ponteiro (float) atribuído com sucesso." << endl;
-
-        // Exibição da matriz pelo ponteiro
-        cout << endl;
-        cout << "Matriz lida (ponteiro - float):" << endl;
-        for (int i = 0; i < dataset1.getN_rows(); ++i) {
-            for (int j = 0; j < dataset1.getN_cols(); ++j) {
-                cout << matrix[i][j] << "\t";  // Tabulação entre os elementos
-            }
-            cout << endl;
-        }
-    }
-
-    // Teste 2: 
-    cout << "\n=== tables/dataset2.csv ===\n";
-
-    // Criação do objeto dataset2
-    ReadCSV dataset2("tables\\dataset2.csv", ',', true, 0, 0, 10, 10);
-    cout << "Objeto dataset2 criado com sucesso." << endl;
-
+    // Dimensões da matriz
+    int rows_training = treino.getN_rows();
+    int cols_training = treino.getN_cols();
+    // Atribuição da matriz de treino
+    int** matrix_training = treino.get_matrix_as_int();
+    
+    
+    // labels
+    cout << "\n=== labels.csv ===\n";
+    // Criação do objeto labels
+    ReadCSV labels("tables\\labels.csv", ',', true, 0, 0, 100, 10);
+    cout << "Objeto labels criado com sucesso." << endl;
     // Leitura do arquivo e criação da matrix
-    dataset2.read_file();
+    labels.read_file();
     cout << endl;
-
     // Exibição da matriz pelo objeto
-    dataset2.display_matrix();
+    labels.display_matrix();
     cout << endl;
+    // Dimensões da matriz
+    int num_labels = labels.getN_rows();
+    // Atribuição da matriz de labels
+    int** matrix_labels = labels.get_matrix_as_int();
+    
 
-    // Atribuição do ponteiro retornado pelo objeto dependendo do tipo de dados
-    if (dataset2.getData_type() == "int") {
-        int** matrix = dataset2.get_matrix_as_int();
-        cout << "Ponteiro (int) atribuído com sucesso." << endl;
+    // conjunto de teste
+    cout << "\n=== tables/teste.csv ===\n";
+    // Criação do objeto teste
+    ReadCSV teste("tables\\int_teste.csv", ',', true, 0, 0, 20, 10);
+    cout << "Objeto teste criado com sucesso." << endl;
+    // Leitura do arquivo e criação da matrix
+    teste.read_file();
+    cout << endl;
+    // Exibição da matriz pelo objeto
+    teste.display_matrix();
+    cout << endl;
+    // Dimensões da matriz
+    int rows_testing = teste.getN_rows();
+    int cols_testing = teste.getN_cols();
+    // Atribuição da matriz de teste
+    int** matrix_testing = teste.get_matrix_as_int();
+    
 
-        // Exibição da matriz pelo ponteiro
-        cout << endl;
-        cout << "Matriz lida (ponteiro - int):" << endl;
-        for (int i = 0; i < dataset2.getN_rows(); ++i) {
-            for (int j = 0; j < dataset2.getN_cols(); ++j) {
-                cout << matrix[i][j] << "\t";  // Tabulação entre os elementos
-            }
-            cout << endl;
-        }
-    } else if (dataset2.getData_type() == "float") {
-        float** matrix = dataset2.get_matrix_as_float();
-        cout << "Ponteiro (float) atribuído com sucesso." << endl;
+    // gabarito
+    cout << "\n=== gabarito.csv ===\n";
+    // Criação do objeto gabarito
+    ReadCSV gabarito("tables\\gabarito.csv", ',', true, 0, 0, 20, 10);
+    cout << "Objeto gabarito criado com sucesso." << endl;
+    // Leitura do arquivo e criação da matrix
+    gabarito.read_file();
+    cout << endl;
+    // Exibição da matriz pelo objeto
+    gabarito.display_matrix();
+    cout << endl;
+    // Dimensões da matriz
+    int num_gabarito = gabarito.getN_rows();
+    // Atribuição da matriz de teste
+    int** matrix_gabarito = gabarito.get_matrix_as_int();
 
-        // Exibição da matriz pelo ponteiro
-        cout << endl;
-        cout << "Matriz lida (ponteiro - float):" << endl;
-        for (int i = 0; i < dataset2.getN_rows(); ++i) {
-            for (int j = 0; j < dataset2.getN_cols(); ++j) {
-                cout << matrix[i][j] << "\t";  // Tabulação entre os elementos
-            }
-            cout << endl;
-        }
+     
+    // Criar e treinar modelo KNN
+    KNN knn(4);  // k = 5
+    knn.set_tables(rows_training, cols_training, num_labels, rows_testing, cols_testing);
+    knn.fit(matrix_training, matrix_labels);
+    int* predictions = knn.predict(matrix_testing);
+    for (int i = 0; i < rows_testing; i++) {
+        cout << "Teste " << i + 1 << ": Classe " << predictions[i] << endl;
     }
+    // Atribuição da matriz de predições (para comparar com o gabarito)
+    int ** matrix_predictions = knn.array_to_matrix(predictions, rows_testing);
 
-    return 0; // O destrutor de `reader` desaloca a matriz automaticamente
+    display_matrix(matrix_predictions, rows_testing, 1);
+
+    float acuracia = compare_matrices(matrix_predictions, matrix_gabarito, rows_testing);
+
+    cout << "Acurácia do modelo: " << acuracia * 100 << "%" << endl;
+
+    return 0; 
 }
