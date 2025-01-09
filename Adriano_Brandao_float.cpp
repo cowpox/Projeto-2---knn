@@ -49,7 +49,7 @@ int main(){
     cout << "\n=== treino.csv ===\n";
     // Criação do objeto treino
     // ReadCSV treino("tables\\float_dataset.csv", ',', true, 0, 0, 1000, 10);//dataset completo (inclui o teste)
-    ReadCSV treino("tables\\float_treino.csv", ',', true, 0, 0, 20, 10);
+    ReadCSV treino("tables\\float_treino.csv", ',', true, 0, 0, 1000, 10);
     cout << "Objeto treino criado com sucesso." << endl;
     // Leitura do arquivo e criação da matrix
     treino.read_file();
@@ -68,7 +68,7 @@ int main(){
     cout << "\n=== labels.csv ===\n";
     // Criação do objeto labels
     // ReadCSV labels("tables\\float_label_dataset.csv", ',', true, 0, 0, 1000, 10);//todos os labels(inclui o teste)
-    ReadCSV labels("tables\\float_labels.csv", ',', true, 0, 0, 20, 10);
+    ReadCSV labels("tables\\float_labels.csv", ',', true, 0, 0, 1000, 10);
     cout << "Objeto labels criado com sucesso." << endl;
     // Leitura do arquivo e criação da matrix
     labels.read_file();
@@ -85,7 +85,7 @@ int main(){
     // conjunto de teste
     cout << "\n=== tables/teste.csv ===\n";
     // Criação do objeto teste
-    ReadCSV teste("tables\\float_teste.csv", ',', true, 0, 0, 10, 10);
+    ReadCSV teste("tables\\float_teste.csv", ',', true, 0, 0, 1000, 10);
     cout << "Objeto teste criado com sucesso." << endl;
     // Leitura do arquivo e criação da matrix
     teste.read_file();
@@ -103,7 +103,7 @@ int main(){
     // gabarito
     cout << "\n=== gabarito.csv ===\n";
     // Criação do objeto gabarito
-    ReadCSV gabarito("tables\\float_gabarito.csv", ',', true, 0, 0, 10, 10);
+    ReadCSV gabarito("tables\\float_gabarito.csv", ',', true, 0, 0, 1000, 10);
     cout << "Objeto gabarito criado com sucesso." << endl;
     // Leitura do arquivo e criação da matrix
     gabarito.read_file();
@@ -118,13 +118,13 @@ int main(){
 
      
     // Criar e treinar modelo KNN
-    KNN knn(3);  // k = 5
+    KNN knn(1);  // k = 5
     knn.set_tables(rows_training, cols_training, num_labels, rows_testing, cols_testing);
     knn.fit(matrix_training, matrix_labels);
     float* predictions = knn.predict(matrix_testing);
-    for (int i = 0; i < rows_testing; i++) {
-        cout << "Teste " << i + 1 << ": Classe " << predictions[i] << endl;
-    }
+    // for (int i = 0; i < rows_testing; i++) {
+    //     cout << "Teste " << i + 1 << ": Classe " << predictions[i] << endl;
+    // }
     // Atribuição da matriz de predições (para comparar com o gabarito)
     float ** matrix_predictions = knn.array_to_matrix_float(predictions, rows_testing);
 

@@ -35,3 +35,13 @@ float_dataset_full.csv => float_treino.csv
 100% dos exemplos do dataset x 20% dos exemplos de teste x k (1-10)
 obs: dataset = treino + teste
 
+7) Para float_dataset, realizados 40 testes
+100% dos exemplos de treino x 100% dos exemplos de teste x k (1-10)
+100% dos exemplos de treino x 20% dos exemplos de teste x k (1-10)
+100% dos exemplos do dataset x 100% dos exemplos de teste x k (1-10)
+100% dos exemplos do dataset x 20% dos exemplos de teste x k (1-10)
+obs: dataset = treino + teste
+
+8) Tabelados resultados de acurácia e feito gráfico de barras
+
+9) Analisados resultados (em testes.md)
