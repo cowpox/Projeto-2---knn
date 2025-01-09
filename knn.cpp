@@ -34,6 +34,7 @@ double KNN::calculate_distance_float(float* a, float* b, int size) {
 int* KNN::find_k_nearest_neighbors(double* distances, int k, int num_examples) {
     // Retorna um array (neighbors) de tamanho k, onde cada
     // elemento é o índice de um dos k exemplos de treinamento mais próximos.
+    k = min(k, num_examples); //valida k (sempre menor ou igual ao numero de exemplos)
     int* neighbors = new int[k];
     for (int i = 0; i < k; i++) { //itera k vezes para encontrar os k vizinhos mais próximos
         //encontra o índice do menor valor
@@ -103,7 +104,7 @@ int KNN::determine_majority_class_float(int* neighbors, int k) {
         // Se a classe ainda não estiver presente no mapa, ela será automaticamente adicionada com valor inicial 0
         // e depois incrementada para 1 (na mesma iteração)
         // Converte o label de float para int antes de usá-lo como chave no mapa.
-        int label = static_cast<int>(arr_labels_float[neighbors[i]]);
+        int label = static_cast<int>(round(arr_labels_float[neighbors[i]])); 
         class_count[label]++;
     }
 
@@ -388,27 +389,32 @@ int* KNN::predict(int** mat_testing) {
     // Iterar por cada exemplo
     for (int i = 0; i < rows_testing; i++) {
         // Calcular distâncias
-        double* distances = new double[rows_training]; //cria um array de distâncias
+        double* distances = new double[rows_training];  // cria um array de distâncias
         for (int j = 0; j < rows_training; j++) {
             distances[j] = calculate_distance(mat_testing[i], mat_training[j], cols_training);
-            cout << "Distância entre teste " << i + 1 << " e treino " << j + 1 << ": " << distances[j] << endl;
+            if (enable_logs) {
+                cout << "Distância entre teste " << i + 1 << " e treino " << j + 1 << ": " << distances[j] << endl;
+            }
         }
 
         // Encontrar os k vizinhos mais próximos
         int* neighbors = find_k_nearest_neighbors(distances, k, rows_training);
 
-        cout << "Vizinhos mais próximos para teste " << i + 1 << ": ";
-        for (int n = 0; n < k; n++) {
-            cout << neighbors[n] << " (classe " << arr_labels[neighbors[n]]
-                 << ") ";
+        if (enable_logs) {
+            cout << "Vizinhos mais próximos para teste " << i + 1 << ": ";
+            for (int n = 0; n < k; n++) {
+                cout << neighbors[n] << " (classe " << arr_labels[neighbors[n]]
+                     << ") ";
+            }
+            cout << endl;
         }
-        cout << endl;
 
         // Determinar a classe majoritária
         arr_prediction[i] = determine_majority_class(neighbors, k);
 
-        cout << "Classe majoritária para teste " << i + 1 << ": "
-             << arr_prediction[i] << endl;
+        if (enable_logs) {
+            cout << "Classe majoritária para teste " << i + 1 << ": " << arr_prediction[i] << endl;
+        }
 
         // Liberar memória temporária
         delete[] distances;
@@ -445,24 +451,28 @@ float* KNN::predict(float** mat_testing) {
         double* distances = new double[rows_training]; //cria um array de distâncias
         for (int j = 0; j < rows_training; j++) {
             distances[j] = calculate_distance_float(mat_testing[i], mat_training_float[j], cols_training);
-            cout << "Distância entre teste " << i + 1 << " e treino " << j + 1 << ": " << distances[j] << endl;
+            if (enable_logs) {
+                cout << "Distância entre teste " << i + 1 << " e treino " << j + 1 << ": " << distances[j] << endl;
+            }
         }
 
         // Encontrar os k vizinhos mais próximos
         int* neighbors = find_k_nearest_neighbors(distances, k, rows_training);
 
-        cout << "Vizinhos mais próximos para teste " << i + 1 << ": ";
-        for (int n = 0; n < k; n++) {
-            cout << neighbors[n] << " (classe " << arr_labels_float[neighbors[n]]
-                 << ") ";
+        if (enable_logs) {
+            cout << "Vizinhos mais próximos para teste " << i + 1 << ": ";
+            for (int n = 0; n < k; n++) {
+                cout << neighbors[n] << " (classe " << arr_labels_float[neighbors[n]] << ") ";
+            }
+            cout << endl;
         }
-        cout << endl;
 
         // Determinar a classe majoritária
         arr_prediction_float[i] = determine_majority_class_float(neighbors, k);
 
-        cout << "Classe majoritária para teste " << i + 1 << ": "
-             << arr_prediction_float[i] << endl;
+        if (enable_logs) {
+            cout << "Classe majoritária para teste " << i + 1 << ": " << arr_prediction_float[i] << endl;
+        }
 
         // Liberar memória temporária
         delete[] distances;

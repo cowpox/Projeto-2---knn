@@ -100,3 +100,8 @@ sobrecarga do metodo compare_matrices, para comparar floats
 
 26) realizados testes iniciais com floats
 
+27) revisão da classe knn:
+*validação de k em find_k_nearest_neighbors
+*criação de flag para habilitar/desabilitar logs
+*ajuste de arredondamento em determine_majority_class_float
+

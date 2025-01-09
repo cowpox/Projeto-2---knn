@@ -25,6 +25,7 @@ class KNN {
 
         bool is_trained; // indica se o método fit já foi utilizado com sucesso
         bool is_float; // indica se a matriz é de floats (true) ou de ints(false)
+        bool enable_logs = false; // controla a exibição de logs
 
         // Métodos auxiliares (privados)
         void free_matrix(int** matrix, int rows); // desaloca a memória
