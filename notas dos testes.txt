@@ -28,3 +28,10 @@ float_dataset_full.csv => float_treino.csv
                         float_labels.csv
                         float_gabarito.csv
 
+6) Para int_dataset, realizados 40 testes:
+100% dos exemplos de treino x 100% dos exemplos de teste x k (1-10)
+100% dos exemplos de treino x 20% dos exemplos de teste x k (1-10)
+100% dos exemplos do dataset x 100% dos exemplos de teste x k (1-10)
+100% dos exemplos do dataset x 20% dos exemplos de teste x k (1-10)
+obs: dataset = treino + teste
+

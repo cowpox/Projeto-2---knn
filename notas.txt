@@ -69,6 +69,34 @@ solução: em set_tables:
         cout << "Aviso: k (" << this->k << ") é maior que o número de exemplos de treinamento (" << rows_training << "). Ajustando k para " << rows_training << "." << endl;
         this->k = rows_training;
     }
+b) 
+b) re-estrutradas tabelas de testes
+c) criada log e tabela de resultados
 
+16) Iniciada implementação de floats. Optei pela sobrecarga de métodos.
 
+17) Necessário criar atributos específicos de float
+        float ** mat_training_float; // ponteiro para a matriz de treino
+        float * arr_labels_float; // ponteiro para a matriz de labels
+        float ** mat_testing_float; // ponteiro para a matriz de teste
+        float * arr_prediction_float; // ponteiro para a matriz de predição
+
+18) Criada flag is_float para identificar o método destrutor adequado
+
+19) Ajustado construtor (inicializar is_float = false)
+
+20) Criado metodo de conversao matriz para array de floats:
+float* matrix_to_array_float(float ** matrix, int num_registers);
+
+21) Criado métodos calculate_distance_float e determine_majority_class_float
+
+23) Implmentado a sobrecarga do metodo predict
+
+24) Refeito o destrutor, desalocando o tipo correto de dados (int ou float), de acordo com a flag is_float
+
+25) no arquivo Adriano_Brandao
+sobrecarga do metodo display_matrix, para exibir floats
+sobrecarga do metodo compare_matrices, para comparar floats
+
+26) realizados testes iniciais com floats
 
